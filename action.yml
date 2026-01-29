@@ -18,7 +18,7 @@ inputs:
     description: JIRA user token
     required: true
   release_name_format:
-    description: Format string for the release name. Use {version} as placeholder for the git tag name. The format string must contain {version}. Example 'Release {version}' or '{version}-prod'
+    description: Format string for the release name. Use {version} as placeholder for the git tag name. The format string must contain {version}. Examples 'Release {version}' or '{version}-prod'
     required: false
     default: '{version}'
 runs:
