@@ -14,7 +14,7 @@ This flow assumes auto-generated release notes will include JIRA issue keys. Thi
 |`jira_project`|JIRA project key.|`PRJ`|
 |`jira_user`|JIRA user with project admin permission.|`apiuser@company.com`|
 |`jira_token`|JIRA token. Managed [here](https://id.atlassian.com/manage-profile/security/api-tokens).|`abcdef12345678`|
-|`release_name_format`|(Optional) Format string for the release name. Use `{version}` as placeholder for the git tag name. Defaults to `{version}`.|`Release {version}`, `{version}-prod`, `v{version}`|
+|`release_name_format`|(Optional) Format string for the release name. Use `{version}` as placeholder for the git tag name. The format string must contain `{version}`. Defaults to `{version}`.|`Release {version}`, `{version}-prod`, `v{version}`|
 
 
 ## Usage

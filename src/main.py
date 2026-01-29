@@ -10,8 +10,14 @@ tag_name = os.environ["GITHUB_REF_NAME"]
 # Get the release name format (default to '{version}' if not set)
 release_name_format = os.environ.get("INPUT_RELEASE_NAME_FORMAT", "{version}")
 
-# Format the release name by replacing {version} with the tag name
-release_name = release_name_format.replace("{version}", tag_name)
+# Validate that the format string contains {version}
+if "{version}" not in release_name_format:
+    print(f"WARNING: release_name_format '{release_name_format}' does not contain '{{version}}' placeholder.")
+    print(f"Using tag name '{tag_name}' as release name instead.")
+    release_name = tag_name
+else:
+    # Format the release name by replacing {version} with the tag name
+    release_name = release_name_format.replace("{version}", tag_name)
 
 release = get_or_create_release(release_name)
 print("JIRA Release:")
