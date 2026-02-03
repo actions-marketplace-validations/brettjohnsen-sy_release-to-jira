@@ -22,7 +22,7 @@ inputs:
     required: false
     default: '{version}'
   tag_format:
-    description: Regex pattern to extract version from tag. Use a capture group () to specify the version part. If not provided, uses the tag name as-is. Examples 'release/prod/(.+)-RC\.\d+' or 'v(.+)'
+    description: "Regex pattern to extract version from tag. Use a capture group () to specify the version part. If not provided, uses the tag name as-is. Examples: 'release/prod/(.+)-RC\\.\\d+' or 'v(.+)'"
     required: false
     default: ''
 runs:

@@ -2,6 +2,7 @@
 Utility functions for version extraction and formatting.
 """
 import re
+import sys
 
 
 def extract_version_number(tag_name, tag_format=None):
@@ -33,8 +34,8 @@ def extract_version_number(tag_name, tag_format=None):
             # Return the first capture group
             return match.group(1)
     except re.error as e:
-        print(f"WARNING: Invalid regex pattern '{tag_format}': {e}")
-        print(f"Using tag as-is: '{tag_name}'")
+        print(f"WARNING: Invalid regex pattern '{tag_format}': {e}", file=sys.stderr)
+        print(f"Using tag as-is: '{tag_name}'", file=sys.stderr)
         return tag_name
     
     # If no match or no capture groups, return the original tag name

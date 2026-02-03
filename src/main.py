@@ -10,7 +10,7 @@ from version_utils import extract_version_number
 tag_name = os.environ["GITHUB_REF_NAME"]
 
 # Get the tag format pattern (optional)
-tag_format = os.environ.get("INPUT_TAG_FORMAT", "")
+tag_format = os.environ.get("INPUT_TAG_FORMAT") or None
 
 # Extract version number from the tag using the pattern
 version = extract_version_number(tag_name, tag_format)
