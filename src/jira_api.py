@@ -31,8 +31,9 @@ def get_project_id():
     return get("")["id"]
 
 def get_project_versions():
+    project_id = get_project_id()
     resp = requests.get(
-        f"{base_url}project/{PROJECT}/versions",
+        f"{base_url}project/{project_id}/versions",
         auth=auth,
     )
     resp.raise_for_status()
