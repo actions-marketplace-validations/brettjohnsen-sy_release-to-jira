@@ -55,4 +55,6 @@ runs:
         INPUT_JIRA_TOKEN: ${{ inputs.jira_token }}
         INPUT_RELEASE_NAME_FORMAT: ${{ inputs.release_name_format }}
         INPUT_TAG_FORMAT: ${{ inputs.tag_format }}
+        GITHUB_TOKEN: ${{ github.token }}
+        GITHUB_REPOSITORY: ${{ github.repository }}
       run: python ./src/main.py

@@ -1,6 +1,7 @@
 import os
 from pprint import pprint
 
+from github_api import update_release_name
 from jira_api import add_release_to_issue, get_or_create_release
 from notes_parser import extract_changes, extract_issue_id
 from version_utils import extract_version_number
@@ -30,6 +31,11 @@ if "{version}" not in release_name_format:
 else:
     # Format the release name by replacing {version} with the extracted version
     release_name = release_name_format.replace("{version}", version)
+
+print(f"Release name: '{release_name}'")
+
+# Update GitHub release name to match the formatted release name
+update_release_name(tag_name, release_name)
 
 release = get_or_create_release(release_name)
 print("JIRA Release:")
