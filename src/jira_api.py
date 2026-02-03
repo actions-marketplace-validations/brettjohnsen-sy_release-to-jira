@@ -28,7 +28,12 @@ def put(endpoint, body):
 
 
 def get_project_id():
-    return get("")["id"]
+    resp = requests.get(
+        f"{base_url}project/{PROJECT}",
+        auth=auth,
+    )
+    resp.raise_for_status()
+    return resp.json()["id"]
 
 def get_project_versions():
     project_id = get_project_id()
