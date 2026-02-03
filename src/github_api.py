@@ -3,11 +3,17 @@ GitHub API functions for managing releases.
 """
 import os
 import requests
+from urllib.parse import quote
 
 
 def get_github_token():
     """Get GitHub token from environment."""
-    return os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
+    token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
+    # Return None if token is empty or whitespace-only
+    if token:
+        token = token.strip()
+        return token if token else None
+    return None
 
 
 def get_repository_info():
@@ -43,8 +49,11 @@ def update_release_name(tag_name, release_name):
         print(f"WARNING: Could not parse repository information from GITHUB_REPOSITORY: {os.environ.get('GITHUB_REPOSITORY')}")
         return False
     
+    # URL-encode the tag name to handle special characters
+    encoded_tag = quote(tag_name, safe='')
+    
     # Get the release by tag
-    url = f"https://api.github.com/repos/{owner}/{repo}/releases/tags/{tag_name}"
+    url = f"https://api.github.com/repos/{owner}/{repo}/releases/tags/{encoded_tag}"
     headers = {
         "Authorization": f"Bearer {token}",
         "Accept": "application/vnd.github+json",
