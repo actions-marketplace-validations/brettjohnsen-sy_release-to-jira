@@ -2,7 +2,9 @@
 
 A GitHub action to automatically create releases on JIRA.
 
-Creates a release on Github. Uses its auto-generated description to find related JIRA issues and updates their "Fix versions" field. If a release matching the tag doesn't exist on JIRA, it will be automatically created.
+Creates a release on GitHub with auto-generated notes. Uses the release notes to find related JIRA issues and updates their "Fix versions" field. If a release matching the tag doesn't exist on JIRA, it will be automatically created.
+
+**Both the GitHub release and JIRA release will use the same formatted name** based on the `release_name_format` and `tag_format` parameters.
 
 This flow assumes auto-generated release notes will include JIRA issue keys. This can be achieved by including JIRA issue key in PR titles.
 
@@ -87,12 +89,17 @@ jobs:
           release_name_format: 'Release {version}'  # Creates "Release 1.1.0"
 ```
 
+This configuration will:
+- Extract "1.1.0" from the tag "release/prod/1.1.0-RC.12"
+- Create both GitHub and JIRA releases with the name "Release 1.1.0"
+
 #### Common tag format patterns
 
 | Tag Example | Pattern | Extracted Version |
 |-------------|---------|-------------------|
 | `v1.0.0` | `v(.+)` | `1.0.0` |
 | `release/prod/1.1.0-RC.12` | `release/prod/(.+)-RC\.\d+` | `1.1.0` |
+| `release/staging-test/1.2.4-RC.12` | `release/staging-test/(.+)-RC\.\d+` | `1.2.4` |
 | `2.0.0-beta` | `(.+)-beta` | `2.0.0` |
 | `releases/v1.2.3` | `releases/v(.+)` | `1.2.3` |
 | `prod-1.0.0-build.123` | `prod-(.+)-build\.\d+` | `1.0.0` |
