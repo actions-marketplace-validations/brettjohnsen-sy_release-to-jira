@@ -11,7 +11,10 @@ tag_name = os.environ["GITHUB_REF_NAME"]
 
 # Extract version number from the tag
 version = extract_version_number(tag_name)
-print(f"Extracted version '{version}' from tag '{tag_name}'")
+if version != tag_name:
+    print(f"Extracted version '{version}' from tag '{tag_name}'")
+else:
+    print(f"Using tag as version: '{version}'")
 
 # Get the release name format (default to '{version}' if not set)
 release_name_format = os.environ.get("INPUT_RELEASE_NAME_FORMAT", "{version}")
