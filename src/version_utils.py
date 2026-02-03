@@ -4,30 +4,38 @@ Utility functions for version extraction and formatting.
 import re
 
 
-def extract_version_number(tag_name):
+def extract_version_number(tag_name, tag_format=None):
     """
-    Extract version number from a tag.
-    
-    Supports tags in the format: release/prod/[version]-RC.[number]
-    Example: "release/prod/1.1.0-RC.12" -> "1.1.0"
-    
-    The version number must follow semantic versioning (X.Y.Z format).
-    If the tag doesn't match the expected pattern, returns the tag as-is
-    for backward compatibility.
+    Extract version number from a tag using a configurable pattern.
     
     Args:
         tag_name: The git tag name
+        tag_format: Optional regex pattern with a capture group () to extract version.
+                   If not provided, returns the tag as-is.
+                   Examples:
+                   - 'release/prod/(.+)-RC\\.\\d+' extracts '1.1.0' from 'release/prod/1.1.0-RC.12'
+                   - 'v(.+)' extracts '1.0.0' from 'v1.0.0'
+                   - '(.+)-beta' extracts '2.0.0' from '2.0.0-beta'
         
     Returns:
-        The extracted version number (X.Y.Z) or the original tag if no match
+        The extracted version number from the first capture group, or the original tag if:
+        - No tag_format is provided
+        - The pattern doesn't match
+        - The pattern has no capture groups
     """
-    # Pattern to match: release/prod/[version]-RC.[number]
-    # This captures the semantic version number part (X.Y.Z) before -RC
-    pattern = r'release/prod/([0-9]+\.[0-9]+\.[0-9]+)-RC\.[0-9]+'
+    # If no pattern provided, return the tag as-is
+    if not tag_format:
+        return tag_name
     
-    match = re.match(pattern, tag_name)
-    if match:
-        return match.group(1)
+    try:
+        match = re.match(tag_format, tag_name)
+        if match and match.groups():
+            # Return the first capture group
+            return match.group(1)
+    except re.error as e:
+        print(f"WARNING: Invalid regex pattern '{tag_format}': {e}")
+        print(f"Using tag as-is: '{tag_name}'")
+        return tag_name
     
-    # If no match, return the original tag name for backward compatibility
+    # If no match or no capture groups, return the original tag name
     return tag_name

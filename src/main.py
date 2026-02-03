@@ -9,10 +9,13 @@ from version_utils import extract_version_number
 # Get the git tag name
 tag_name = os.environ["GITHUB_REF_NAME"]
 
-# Extract version number from the tag
-version = extract_version_number(tag_name)
+# Get the tag format pattern (optional)
+tag_format = os.environ.get("INPUT_TAG_FORMAT", "")
+
+# Extract version number from the tag using the pattern
+version = extract_version_number(tag_name, tag_format)
 if version != tag_name:
-    print(f"Extracted version '{version}' from tag '{tag_name}'")
+    print(f"Extracted version '{version}' from tag '{tag_name}' using pattern '{tag_format}'")
 else:
     print(f"Using tag as version: '{version}'")
 
