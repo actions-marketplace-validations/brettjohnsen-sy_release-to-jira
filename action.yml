@@ -1,8 +1,8 @@
 name: Release to JIRA
-description: A GitHub action to automatically create releases on JIRA.
-author: ulasozguler
+description: A GitHub action to automatically create releases on Github and JIRA. Linking tickets to the JIRA release from the git commits.
+author: brettjohnsen-sy
 branding:
-  icon: 'edit'
+  icon: 'send'
   color: 'blue'
 inputs:
   jira_server:
