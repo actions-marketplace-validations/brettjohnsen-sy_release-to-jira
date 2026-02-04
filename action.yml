@@ -1,21 +1,21 @@
-name: Release to JIRA
-description: A GitHub action to automatically create releases on Github and JIRA. Linking tickets to the JIRA release from the git commits.
+name: Release to GitHub & Jira
+description: A GitHub action to automatically create releases on Github and Jira. Links Jira tickets to release from commits.
 author: brettjohnsen-sy
 branding:
   icon: 'send'
   color: 'blue'
 inputs:
   jira_server:
-    description: JIRA server
+    description: Jira server
     required: true
   jira_project:
-    description: JIRA project
+    description: Jira project
     required: true
   jira_user:
-    description: JIRA user
+    description: Jira user
     required: true
   jira_token:
-    description: JIRA user token
+    description: Jira user token
     required: true
   release_name_format:
     description: Format string for the release name. Use {version} as placeholder for the git tag name. The format string must contain {version}. Examples 'Release {version}' or '{version}-prod'
@@ -45,7 +45,7 @@ runs:
             -f name='${{ github.ref_name }}' \
             -F generate_release_notes=true \
           --jq .body > notes.md
-    - name: Update JIRA
+    - name: Update Jira
       shell: bash
       working-directory: ${{ github.action_path }}
       env:
